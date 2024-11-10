@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/10 17:58:45 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/10 21:54:52 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static char *found_new_line(char **buff, int fd)
 
     b = 0;
     *buff = (char *)malloc(BUFFER_SIZE + 1);
-    b = read(fd, buff, BUFFER_SIZE);
-    buff[b] = '\0';
+    b = read(fd, *buff, BUFFER_SIZE);
+    *buff[b] = '\0';
     return (*buff);
 }
 
@@ -31,15 +31,30 @@ static size_t   count_char(t_list *lst)
     len = 0;
     while (lst != NULL)
     {
-        len = len + ft_strlen(lst->content);
+        len = len + strlen(lst->content);
         lst = lst->next;
     }
     return (len);
 }
 
-static char *cpy_line_in_buff(t_list *lst, char *buff)
+static char *cpy_line_in_buff(t_list *lst, char **buff)
 {
+    int  i;
+    int  j;
     
+    i = 0;
+    while (lst != NULL)
+    {
+        j = 0;
+        while ((lst->content)[j] != '\0')
+        {
+            buff[i] = (lst->content)[j];
+            i++;
+            j++;
+        }
+        lst = lst->next;
+    }
+    return (buff);
 }
 
 char *get_next_line(int fd)
@@ -69,7 +84,7 @@ char *get_next_line(int fd)
         if (lst == NULL)
         {
             lst = (t_list *)malloc(sizeof(t_list));
-            lst->content = buff;
+            lst->content = strdup(buff);
             ihtafd = lst;
         }
         if (lst != NULL)
@@ -91,7 +106,7 @@ char *get_next_line(int fd)
 
 int main()
 {
-    int fd = opne("text", O_RDONLY);
+    int fd = open("text", O_RDONLY);
     char *line;
     int lines;
 
