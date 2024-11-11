@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:36 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/10 11:32:21 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/11 09:33:32 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <stddef.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
+# include <limits.h>
 
 typedef struct s_list
 {
@@ -29,5 +34,10 @@ typedef struct s_list
 
 char    *get_next_line(int fd);
 ssize_t read(int fd, void *buff, size_t size);
+size_t  ft_strlen(const char *s);
+char	*ft_strdup(const char *s1);
+void	*ft_calloc(size_t count, size_t size);
+void	ft_bzero(void *s, size_t n);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif

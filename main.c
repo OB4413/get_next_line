@@ -2,15 +2,15 @@
 
 int main()
 {
-    int fd = open("texthh", O_RDONLY);
-    char buff[270];
-    int h = 0;
-    int num = 1;
-    printf("%d", fd);
-    while ((h = read(fd, buff, 4)))
+    int fd = open("text", O_RDONLY);
+    char *line;
+    int lines;
+
+    lines = 0;
+    while((line = get_next_line(fd)))
     {
-        printf("%d", h);
-        if (h == -1)
+        if (line == NULL)
             break;
+        printf("%d->%s\n", lines++, line);
     }
 }
