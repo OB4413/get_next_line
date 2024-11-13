@@ -1,16 +1,30 @@
 #include "get_next_line.h"
+#include <stdio.h>
 
 int main()
 {
     int fd = open("text", O_RDONLY);
-    char *line;
-    int lines;
-
-    lines = 0;
+    char    *line;
     while((line = get_next_line(fd)))
     {
         if (line == NULL)
             break;
-        printf("%d->%s\n", lines++, line);
+        printf("%s", line);
     }
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
+    // printf("%s", get_next_line(fd));
 }

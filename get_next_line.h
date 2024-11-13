@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:36 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/11 09:33:32 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/13 13:09:15 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 10
 # endif
 
 # include <stdio.h>
@@ -25,6 +25,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <limits.h>
+# include <string.h>
 
 typedef struct s_list
 {
@@ -39,5 +40,6 @@ char	*ft_strdup(const char *s1);
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif

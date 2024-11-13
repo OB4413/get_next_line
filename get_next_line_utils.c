@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:39 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/11 09:33:22 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/12 12:38:54 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,32 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 		i++;
 	}
 	return (dst);
+}
+
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char		*p;
+	size_t		j;
+	size_t		k;
+
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	if (s1 == NULL)
+		return (ft_strdup(s2));
+	if (s2 == NULL)
+		return (ft_strdup(s1));
+	p = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	j = 0;
+	k = 0;
+	if (p == NULL)
+		return (NULL);
+	while (s1[j] != '\0')
+	{
+		p[j] = s1[j];
+		j++;
+	}
+	while (s2[k] != '\0')
+		p[j++] = s2[k++];
+	p[j] = '\0';
+	return (p);
 }
