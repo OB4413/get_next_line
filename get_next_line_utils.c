@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:39 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/12 12:38:54 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/14 12:20:18 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ size_t	ft_strlen(const char *s)
 
 	i = 0;
 	while (s[i] != '\0')
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -30,39 +28,12 @@ char	*ft_strdup(const char *s1)
 	char	*p;
 
 	i = ft_strlen(s1);
-	p = ft_calloc((i + 1), sizeof(char));
+	p = (char *)malloc((i + 1) * sizeof(char));
 	if (p == NULL)
 		return (NULL);
 	ft_memcpy(p, s1, i);
 	p[i] = '\0';
 	return (p);
-}
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	void	*p;
-
-	if (size && count > SIZE_MAX / size)
-		return (NULL);
-	p = malloc(count * size);
-	if (p == NULL)
-		return (NULL);
-	ft_bzero(p, (count * size));
-	return (p);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	unsigned char	*p;
-	size_t			i;
-
-	p = (unsigned char *)s;
-	i = 0;
-	while (i < n)
-	{
-		p[i] = 0;
-		i++;
-	}
 }
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
@@ -82,9 +53,9 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char		*p;
-	size_t		j;
-	size_t		k;
+	char	*p;
+	size_t	j;
+	size_t	k;
 
 	if (s1 == NULL && s2 == NULL)
 		return (NULL);
@@ -92,7 +63,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		return (ft_strdup(s2));
 	if (s2 == NULL)
 		return (ft_strdup(s1));
-	p = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
+	p = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
 	j = 0;
 	k = 0;
 	if (p == NULL)
