@@ -11,20 +11,20 @@ int main()
             break;
         printf("%s", line);
     }
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
-    // printf("%s", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
+    // printf("==%s\n", get_next_line(fd));
 }
