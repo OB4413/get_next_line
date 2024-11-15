@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/14 14:38:41 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/14 18:22:42 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,21 @@ char	*get_next_line(int fd)
 	char		*mkhzan;
 	int			j;
 
-	mkhzan = NULL;
 	j = 0;
+	mkhzan = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (j != 1 && (buff = read_file(fd, &p)))
+	while (j != 1)
 	{
+		buff = read_file(fd, &p);
+		if (!buff)
+			break ;
 		buff = new_buff(buff, &p, &j);
-		mkhzan = ft_strjoin(mkhzan, buff);
-		free(buff);
+		if (buff)
+		{
+			mkhzan = ft_strjoin(mkhzan, buff);
+			free(buff);
+		}
 	}
 	if (!mkhzan && p)
 		return (last_p(&p));
