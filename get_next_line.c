@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/14 18:22:42 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/15 10:15:51 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static char	*last_p(char **p)
 		}
 		k++;
 	}
-	line = strdup(*p);
+	line = ft_strdup(*p);
 	free(*p);
 	*p = NULL;
 	return (line);
@@ -117,11 +117,15 @@ char	*get_next_line(int fd)
 		if (!buff)
 			break ;
 		buff = new_buff(buff, &p, &j);
-		if (buff)
+		if (mkhzan)
 		{
-			mkhzan = ft_strjoin(mkhzan, buff);
-			free(buff);
+			char *temp = ft_strjoin(mkhzan, buff);
+			free(mkhzan);
+			mkhzan = temp;
 		}
+		else
+			mkhzan = ft_strdup(buff);
+		free(buff);
 	}
 	if (!mkhzan && p)
 		return (last_p(&p));
