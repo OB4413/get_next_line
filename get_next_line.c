@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/16 12:30:14 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/19 17:26:37 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ static char	*last_p(char **p)
 		{
 			k++;
 			line = ft_strdup(*p);
-			if (line == NULL)
-				return (NULL);
 			ft_strcpy(*p, &(*p)[k]);
 			line[k] = '\0';
 			return (line);
@@ -85,12 +83,6 @@ static char	*last_p(char **p)
 		k++;
 	}
 	line = ft_strdup(*p);
-	if (line == NULL)
-	{
-		return (NULL);
-		free(*p);
-		*p = NULL;
-	}
 	free(*p);
 	*p = NULL;
 	return (line);
@@ -136,32 +128,14 @@ char	*get_next_line(int fd)
 		if (!buff)
 			break ;
 		buff = new_buff(buff, &p, &j);
-		if (buff == NULL)
-		{
-			free(buff);
-			return (NULL);
-		}
 		if (mkhzan)
 		{
 			char *temp = ft_strjoin(mkhzan, buff);
-			if (temp == NULL)
-			{
-				free(mkhzan);
-				free(buff);
-				return (NULL);
-			}
 			free(mkhzan);
 			mkhzan = temp;
 		}
 		else
-		{
 			mkhzan = ft_strdup(buff);
-			if (mkhzan == NULL)
-			{
-				free(buff);
-				return (NULL);
-			}
-		}
 		free(buff);
 	}
 	if (!mkhzan && p && p[0] != '\0')
