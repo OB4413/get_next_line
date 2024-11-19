@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/15 10:15:51 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/16 12:30:14 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,27 @@ static char	*read_file(int fd, char **p)
 	if (!buff)
 		return (NULL);
 	i = read(fd, buff, BUFFER_SIZE);
-	if (i < 0)
+	if (i == 0)
 	{
 		free(buff);
+		return (NULL);
+	}
+	if (i == -1)
+	{
+		free(buff);
+		free(*p);
+		*p = NULL;
 		return (NULL);
 	}
 	buff[i] = '\0';
-	if (buff[0] == '\0')
+	joined = ft_strjoin(*p, buff);
+	if (!joined)
 	{
 		free(buff);
+		free(*p);
+		*p = NULL;
 		return (NULL);
 	}
-	joined = ft_strjoin(*p, buff);
 	free(buff);
 	free(*p);
 	*p = NULL;
@@ -67,6 +76,8 @@ static char	*last_p(char **p)
 		{
 			k++;
 			line = ft_strdup(*p);
+			if (line == NULL)
+				return (NULL);
 			ft_strcpy(*p, &(*p)[k]);
 			line[k] = '\0';
 			return (line);
@@ -74,6 +85,12 @@ static char	*last_p(char **p)
 		k++;
 	}
 	line = ft_strdup(*p);
+	if (line == NULL)
+	{
+		return (NULL);
+		free(*p);
+		*p = NULL;
+	}
 	free(*p);
 	*p = NULL;
 	return (line);
@@ -92,6 +109,8 @@ static char	*new_buff(char *buff, char **p, int *j)
 			*j = 1;
 			free(*p);
 			*p = ft_strdup(&buff[i]);
+			if (*p == NULL)
+				return (NULL);
 			buff[i] = '\0';
 			return (buff);
 		}
@@ -117,17 +136,41 @@ char	*get_next_line(int fd)
 		if (!buff)
 			break ;
 		buff = new_buff(buff, &p, &j);
+		if (buff == NULL)
+		{
+			free(buff);
+			return (NULL);
+		}
 		if (mkhzan)
 		{
 			char *temp = ft_strjoin(mkhzan, buff);
+			if (temp == NULL)
+			{
+				free(mkhzan);
+				free(buff);
+				return (NULL);
+			}
 			free(mkhzan);
 			mkhzan = temp;
 		}
 		else
+		{
 			mkhzan = ft_strdup(buff);
+			if (mkhzan == NULL)
+			{
+				free(buff);
+				return (NULL);
+			}
+		}
 		free(buff);
 	}
-	if (!mkhzan && p)
+	if (!mkhzan && p && p[0] != '\0')
 		return (last_p(&p));
+	if (!mkhzan)
+	{
+		free(p);
+		p = NULL;
+		return (NULL);
+	}
 	return (mkhzan);
 }
