@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/19 17:26:37 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/20 11:10:37 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,10 @@ static void	ft_strcpy(char *dest, char *src)
 static char	*read_file(int fd, char **p)
 {
 	char	*buff;
-	ssize_t	i;
+	int		i;
 	char	*joined;
 
 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
-		return (NULL);
 	i = read(fd, buff, BUFFER_SIZE);
 	if (i == 0)
 	{
@@ -49,13 +47,6 @@ static char	*read_file(int fd, char **p)
 	}
 	buff[i] = '\0';
 	joined = ft_strjoin(*p, buff);
-	if (!joined)
-	{
-		free(buff);
-		free(*p);
-		*p = NULL;
-		return (NULL);
-	}
 	free(buff);
 	free(*p);
 	*p = NULL;
@@ -116,6 +107,7 @@ char	*get_next_line(int fd)
 	static char	*p = NULL;
 	char		*buff;
 	char		*mkhzan;
+	char		*temp;
 	int			j;
 
 	j = 0;
@@ -128,14 +120,9 @@ char	*get_next_line(int fd)
 		if (!buff)
 			break ;
 		buff = new_buff(buff, &p, &j);
-		if (mkhzan)
-		{
-			char *temp = ft_strjoin(mkhzan, buff);
-			free(mkhzan);
-			mkhzan = temp;
-		}
-		else
-			mkhzan = ft_strdup(buff);
+		temp = ft_strjoin(mkhzan, buff);
+		free(mkhzan);
+		mkhzan = temp;
 		free(buff);
 	}
 	if (!mkhzan && p && p[0] != '\0')

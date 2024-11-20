@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:36 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/15 10:43:20 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/20 11:11:13 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char				*get_next_line(int fd);
 ssize_t				read(int fd, void *buff, size_t size);
 size_t				ft_strlen(const char *s);
 char				*ft_strdup(const char *s1);
-void				*ft_calloc(size_t count, size_t size);
-void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
 char				*ft_strjoin(char const *s1, char const *s2);
 
