@@ -6,7 +6,7 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:39 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/20 11:11:00 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/21 17:27:04 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,26 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		p[j++] = s2[k++];
 	p[j] = '\0';
 	return (p);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	char	ch;
+	size_t	i;
+
+	ch = (char)c;
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == ch)
+		{
+			return ((char *)&s[i]);
+		}
+		i++;
+	}
+	if (ch == '\0')
+	{
+		return ((char *)&s[i]);
+	}
+	return (NULL);
 }

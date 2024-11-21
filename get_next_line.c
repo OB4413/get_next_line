@@ -6,80 +6,39 @@
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/20 11:10:37 by obarais          ###   ########.fr       */
+/*   Updated: 2024/11/21 18:39:45 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void	ft_strcpy(char *dest, char *src)
-{
-	size_t	i;
-
-	i = 0;
-	while (src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-}
-
 static char	*read_file(int fd, char **p)
 {
 	char	*buff;
-	int		i;
-	char	*joined;
+	char	*join;
+	ssize_t	i;
 
 	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
 	i = read(fd, buff, BUFFER_SIZE);
-	if (i == 0)
+	if (i == -1 || i == 0)
 	{
 		free(buff);
-		return (NULL);
-	}
-	if (i == -1)
-	{
-		free(buff);
-		free(*p);
-		*p = NULL;
+		if (i == -1)
+		{
+			free(*p);
+			*p = NULL;
+		}
 		return (NULL);
 	}
 	buff[i] = '\0';
-	joined = ft_strjoin(*p, buff);
+	join = ft_strjoin(*p, buff);
 	free(buff);
 	free(*p);
 	*p = NULL;
-	return (joined);
+	return (join);
 }
 
-static char	*last_p(char **p)
-{
-	char	*line;
-	size_t	k;
-
-	k = 0;
-	if (!(*p))
-		return (NULL);
-	while ((*p)[k] != '\0')
-	{
-		if ((*p)[k] == '\n')
-		{
-			k++;
-			line = ft_strdup(*p);
-			ft_strcpy(*p, &(*p)[k]);
-			line[k] = '\0';
-			return (line);
-		}
-		k++;
-	}
-	line = ft_strdup(*p);
-	free(*p);
-	*p = NULL;
-	return (line);
-}
-
-static char	*new_buff(char *buff, char **p, int *j)
+static char	*finde_newline(char *buff, char **p, int *j)
 {
 	size_t	i;
 
@@ -90,7 +49,6 @@ static char	*new_buff(char *buff, char **p, int *j)
 		{
 			i++;
 			*j = 1;
-			free(*p);
 			*p = ft_strdup(&buff[i]);
 			if (*p == NULL)
 				return (NULL);
@@ -102,36 +60,55 @@ static char	*new_buff(char *buff, char **p, int *j)
 	return (buff);
 }
 
+static char	*ft_get_line(int fd, char **p)
+{
+	char	*buff;
+	char	*join;
+	char	*temp;
+	int		j;
+
+	join = NULL;
+	j = 0;
+	while (j != 1)
+	{
+		buff = read_file(fd, &(*p));
+		if (buff == NULL)
+			break ;
+		buff = finde_newline(buff, &(*p), &j);
+		temp = ft_strjoin(join, buff);
+		free(join);
+		join = temp;
+		free(buff);
+	}
+	if (join == NULL && *p != NULL)
+	{
+		join = *p;
+		*p = NULL;
+	}
+	return (join);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*p = NULL;
-	char		*buff;
-	char		*mkhzan;
 	char		*temp;
 	int			j;
 
 	j = 0;
-	mkhzan = NULL;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (j != 1)
+	while (p != NULL)
 	{
-		buff = read_file(fd, &p);
-		if (!buff)
+		if (p[0] == '\0')
+		{
+			free(p);
+			p = NULL;
 			break ;
-		buff = new_buff(buff, &p, &j);
-		temp = ft_strjoin(mkhzan, buff);
-		free(mkhzan);
-		mkhzan = temp;
-		free(buff);
+		}
+		temp = finde_newline(p, &p, &j);
+		if (j == 1)
+			return (temp);
+		break ;
 	}
-	if (!mkhzan && p && p[0] != '\0')
-		return (last_p(&p));
-	if (!mkhzan)
-	{
-		free(p);
-		p = NULL;
-		return (NULL);
-	}
-	return (mkhzan);
+	return (ft_get_line(fd, &p));
 }
