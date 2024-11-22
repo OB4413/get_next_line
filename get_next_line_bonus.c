@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: obarais <obarais@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/08 11:44:45 by obarais           #+#    #+#             */
-/*   Updated: 2024/11/22 10:04:26 by obarais          ###   ########.fr       */
+/*   Created: 2024/11/22 09:31:14 by obarais           #+#    #+#             */
+/*   Updated: 2024/11/22 11:39:30 by obarais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static char	*read_file(int fd, char **p)
 {
@@ -92,25 +92,25 @@ static char	*ft_get_line(int fd, char **p)
 
 char	*get_next_line(int fd)
 {
-	static char	*p;
+	static char	*p[OPEN_MAX];
 	char		*temp;
 	int			j;
 
 	j = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= OPEN_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (p != NULL)
+	while (p[fd] != NULL)
 	{
-		if (p[0] == '\0')
+		if (p[fd][0] == '\0')
 		{
-			free(p);
-			p = NULL;
+			free(p[fd]);
+			p[fd] = NULL;
 			break ;
 		}
-		temp = finde_newline(p, &p, &j);
+		temp = finde_newline(p[fd], &p[fd], &j);
 		if (j == 1)
 			return (temp);
 		break ;
 	}
-	return (ft_get_line(fd, &p));
+	return (ft_get_line(fd, &p[fd]));
 }
