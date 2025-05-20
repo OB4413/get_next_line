@@ -10,6 +10,11 @@ The **get_next_line** project consists of implementing a function that returns a
 
 ```c
 char *get_next_line(int fd);
+```
+
+## 📁 File Structure
+
+```
 get_next_line/
 ├── get_next_line.c
 ├── get_next_line_utils.c
@@ -17,6 +22,11 @@ get_next_line/
 ├── main.c            # For testing (optional)
 ├── Makefile
 └── README.md
+```
+
+## 🧪 Example
+
+```c
 #include "get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
@@ -34,6 +44,24 @@ int main(void)
     close(fd);
     return (0);
 }
+```
+
+## 🔧 Compilation
+
+```bash
 make BUFFER_SIZE=42
 gcc -Wall -Wextra -Werror get_next_line.c get_next_line_utils.c main.c
 ./a.out
+```
+
+## ✅ Features
+
+- Reads from any valid file descriptor.
+- Handles multiple file descriptors at the same time.
+- Prevents memory leaks.
+- 1337 Norm compliant.
+
+## 👨‍💻 Author
+
+- GitHub: [OB4413](https://github.com/OB4413)
+
